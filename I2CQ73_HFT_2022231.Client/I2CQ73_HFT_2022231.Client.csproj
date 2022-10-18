@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\I2CQ73_HFT_2022231.Models\I2CQ73_HFT_2022231.Models.csproj" />
+  </ItemGroup>
+
+</Project>
