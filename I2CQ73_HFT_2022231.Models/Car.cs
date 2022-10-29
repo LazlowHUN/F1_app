@@ -9,6 +9,7 @@ using System.Data;
 
 namespace I2CQ73_HFT_2022231.Models
 {
+	[Table("Car")]
 	public class Car
 	{
 		[Key]
@@ -23,6 +24,7 @@ namespace I2CQ73_HFT_2022231.Models
 
 		public int Horsepower { get; set; }
 
+		[NotMapped]
 		public virtual Team Team { get; set; }
 
 		public Car()

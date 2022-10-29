@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace I2CQ73_HFT_2022231.Models
 {
+	[Table("Pilot")]
 	public class Pilot
 	{
 		[Key]
@@ -22,9 +23,10 @@ namespace I2CQ73_HFT_2022231.Models
 		public int PilotAge { get; set; }
 
 		[Required]
-		[ForeignKey("TeamId")]
+		[ForeignKey(nameof(Models.Team))]
 		public int TeamId { get; set; }
 
+		[NotMapped]
 		public virtual Team Team { get; set; }
 
 		public Pilot()

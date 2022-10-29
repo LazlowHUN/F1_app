@@ -1,4 +1,5 @@
-﻿using I2CQ73_HFT_2022231.Models;
+﻿using Castle.DynamicProxy.Generators.Emitters.SimpleAST;
+using I2CQ73_HFT_2022231.Models;
 using I2CQ73_HFT_2022231.Repository;
 using Microsoft.VisualBasic;
 using System;
@@ -48,65 +49,125 @@ namespace I2CQ73_HFT_2022231.Logic
 			this.pilotRepo.Update(item);
 		}
 
-		public IEnumerable<object> LeclersCarStatistics()
+		public IEnumerable<NameTeamSpeed> LeclersCarStatistics()
 		{
 			return from p in this.pilotRepo.ReadAll()
-				   from t in this.teamRepo.ReadAll()
-				   where p.TeamId == t.TeamId && p.PilotName.Equals("Charles Leclerc")
-				   select new
+					   //from t in this.teamRepo.ReadAll()
+					   //from c in this.carRepo.ReadAll()
+					   //where p.TeamId == t.TeamId && p.PilotName.Equals("Charles Leclerc") && c.CarId == t.CarId
+					   //select new NameTeamSpeed()
+					   //{
+					   // Name = p.PilotName,
+					   // Team = t.TeamName,
+					   // Speed = c.MaxSpeed,
+					   //};
+				   where p.PilotName == "Charles Leclerc"
+				   select new NameTeamSpeed
 				   {
 					   Name = p.PilotName,
-					   Team = t.TeamName,
-					   Speed = carRepo.Read(t.CarId).MaxSpeed,
+					   Team = p.Team.TeamName,
+					   Speed = p.Team.Car.MaxSpeed,
 				   };
 		}
 
-		public IEnumerable<object> YoungestPilotsEngineBrand()
+		public IEnumerable<NameEngineBrand> YoungestPilotsEngineBrand()
 		{
 			return from p in this.pilotRepo.ReadAll()
 				   from t in this.teamRepo.ReadAll()
+				   from c in this.carRepo.ReadAll()
 				   let minAge = pilotRepo.ReadAll().Min(x => x.PilotAge)
-				   where p.TeamId == t.TeamId && p.PilotAge == minAge
-				   select new
+				   where p.TeamId == t.TeamId && p.PilotAge == minAge && c.CarId == t.CarId
+				   select new NameEngineBrand()
 				   {
 					   Name = p.PilotName,
-					   EngineBrand = carRepo.Read(p.TeamId),
+					   EngineBrand = c.EngineBrand,
 				   };
 		}
 
-		public IEnumerable<object> Pilots1040HorsePower()
+		public IEnumerable<NameEngineBrand> Pilots1040HorsePower()
 		{
 			return from c in this.carRepo.ReadAll()
 				   from t in this.teamRepo.ReadAll()
 				   from p in this.pilotRepo.ReadAll()
 				   where c.Horsepower == 1040 && c.CarId == t.CarId && p.TeamId == t.TeamId
-				   select new
+				   select new NameEngineBrand()
 				   {
 					   Name = p.PilotName,
+					   EngineBrand = c.EngineBrand,
 				   };
 		}
-		public IEnumerable<object> MercedesBrandTeamPointsAbove200Pilots()
+		public IEnumerable<NameEngineBrand> MercedesBrandTeamPointsAbove200Pilots()
 		{
 			return from c in this.carRepo.ReadAll()
 				   from t in this.teamRepo.ReadAll()
 				   from p in this.pilotRepo.ReadAll()
 				   where c.EngineBrand == "Mercedes" && c.CarId == t.TeamId && t.TeamPoints > 200 && p.TeamId == t.TeamId
-				   select new
+				   select new NameEngineBrand()
 				   {
 					   Name = p.PilotName,
+					   EngineBrand = c.EngineBrand,
 				   };
 		}
-		public IEnumerable<object> YoungerThan30PilotsTeamBudgetAbove150MMaxSpeed()
+		public IEnumerable<NameTeamSpeed> YoungerThan30PilotsTeamBudgetAbove150MMaxSpeed()
 		{
 			return from p in this.pilotRepo.ReadAll()
 				   from t in this.teamRepo.ReadAll()
 				   from c in this.carRepo.ReadAll()
 				   where p.PilotAge < 30 && p.TeamId == t.TeamId && t.Budget > 150000000 && t.CarId == c.CarId
-				   select new
+				   select new NameTeamSpeed()
 				   {
 					   Name = p.PilotName,
-					   MaxSpeed = c.MaxSpeed,
+					   Team = t.TeamName,
+					   Speed = c.MaxSpeed,
 				   };
+		}
+	}
+
+	public class NameTeamSpeed
+	{
+		public string Name { get; set; }
+		public string Team { get; set; }
+		public double Speed { get; set; }
+
+		public override bool Equals(object obj)
+		{
+			NameTeamSpeed a = obj as NameTeamSpeed;
+			if (a == null)
+			{
+				return false;
+			}
+			else
+			{
+				return this.Name == a.Name && this.Team == a.Team && this.Speed == a.Speed;
+			}
+		}
+
+		public override int GetHashCode()
+		{
+			return HashCode.Combine(this.Name, this.Team, this.Speed);
+		}
+	}
+	public class NameEngineBrand
+	{
+		public string Name { get; set; }
+		public string EngineBrand { get; set; }
+
+		public override bool Equals(object obj)
+		{
+			NameEngineBrand a = obj as NameEngineBrand;
+			if (a == null)
+			{
+				return false;
+			}
+			else
+			{
+				return this.Name == a.Name && this.EngineBrand == a.EngineBrand;
+			}
+		}
+
+		public override int GetHashCode()
+		{
+			return HashCode.Combine(this.Name, this.EngineBrand);
 		}
 	}
 }

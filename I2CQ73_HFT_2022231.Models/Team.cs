@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace I2CQ73_HFT_2022231.Models
 {
+	[Table("Team")]
 	public class Team
 	{
 		[Key]
@@ -20,15 +21,17 @@ namespace I2CQ73_HFT_2022231.Models
 		public string TeamName { get; set; }
 
 		[Required]
-		[ForeignKey("CarId")]
+		[ForeignKey(nameof(Models.Car))]
 		public int CarId { get; set; }
 
 		public int Budget { get; set; }
 
 		public int TeamPoints { get; set; }
 
+		[NotMapped]
 		public virtual ICollection<Pilot> Pilots { get; set; }
 
+		[NotMapped]
 		public virtual Car Car { get; set; }
 
 		public Team()

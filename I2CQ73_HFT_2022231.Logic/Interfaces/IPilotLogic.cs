@@ -8,7 +8,6 @@ namespace I2CQ73_HFT_2022231.Logic
 	{
 		void Create(Pilot item);
 		void Delete(int id);
-		IEnumerable<object> LeclersCarStatistics();
 		Pilot Read(int id);
 		IQueryable<Pilot> ReadAll();
 		void Update(Pilot item);

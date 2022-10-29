@@ -15,11 +15,8 @@ namespace I2CQ73_HFT_2022231.Client
 			//PilotLogic logic = new PilotLogic(pilotRepo, teamRepo, carRepo);
 
 			//var max = logic.LeclersCarStatistics();
-			//var youngest = logic.YoungestPilotsEngineBrand();
-			//var pilots = logic.Pilots1040HorsePower();
-			//var teampoints = logic.MercedesBrandTeamPointsAbove200Pilots();
-			//var youngerspeed = logic.YoungerThan30PilotsTeamBudgetAbove150MMaxSpeed();
 
+			//;
 		}
 	}
 }
