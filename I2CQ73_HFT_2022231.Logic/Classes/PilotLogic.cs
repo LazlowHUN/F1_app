@@ -52,22 +52,22 @@ namespace I2CQ73_HFT_2022231.Logic
 		public IEnumerable<NameTeamSpeed> LeclersCarStatistics()
 		{
 			return from p in this.pilotRepo.ReadAll()
-					   //from t in this.teamRepo.ReadAll()
-					   //from c in this.carRepo.ReadAll()
-					   //where p.TeamId == t.TeamId && p.PilotName.Equals("Charles Leclerc") && c.CarId == t.CarId
-					   //select new NameTeamSpeed()
-					   //{
-					   // Name = p.PilotName,
-					   // Team = t.TeamName,
-					   // Speed = c.MaxSpeed,
-					   //};
-				   where p.PilotName == "Charles Leclerc"
-				   select new NameTeamSpeed
+				   from t in this.teamRepo.ReadAll()
+				   from c in this.carRepo.ReadAll()
+				   where p.TeamId == t.TeamId && p.PilotName.Equals("Charles Leclerc") && c.CarId == t.CarId
+				   select new NameTeamSpeed()
 				   {
 					   Name = p.PilotName,
-					   Team = p.Team.TeamName,
-					   Speed = p.Team.Car.MaxSpeed,
+					   Team = t.TeamName,
+					   Speed = c.MaxSpeed,
 				   };
+			//where p.PilotName == "Charles Leclerc"
+			//select new NameTeamSpeed
+			//{
+			// Name = p.PilotName,
+			// Team = p.Team.TeamName,
+			// Speed = p.Team.Car.MaxSpeed,
+			//};
 		}
 
 		public IEnumerable<NameEngineBrand> YoungestPilotsEngineBrand()
