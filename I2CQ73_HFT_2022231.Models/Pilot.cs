@@ -19,7 +19,7 @@ namespace I2CQ73_HFT_2022231.Models
 		[StringLength(240)]
 		public string PilotName { get; set; }
 
-		[Range(10,100)]
+		[Range(15,50)]
 		public int PilotAge { get; set; }
 
 		[Required]

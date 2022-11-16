@@ -23,17 +23,38 @@ namespace I2CQ73_HFT_2022231.Logic
 
 		public void Create(Car item)
 		{
-			this.carRepo.Create(item);
+			if (item.EngineBrand.Length < 3)
+			{
+				throw new ArgumentException("The name is too short.");
+			}
+			else if (item.EngineBrand.Length > 240)
+			{
+				throw new ArgumentException("The name is too long.");
+			}
+			else
+			{
+				this.carRepo.Create(item);
+			}
 		}
 
 		public void Delete(int id)
 		{
+			var car = this.carRepo.Read(id);
+			if (car == null)
+			{
+				throw new ArgumentException("Car do not exists!");
+			}
 			this.carRepo.Delete(id);
 		}
 
 		public Car Read(int id)
 		{
-			return this.carRepo.Read(id);
+			var car = this.carRepo.Read(id);
+			if (car == null)
+			{
+				throw new ArgumentException("Car do not exists!");
+			}
+			return car;
 		}
 
 		public IQueryable<Car> ReadAll()
@@ -43,7 +64,14 @@ namespace I2CQ73_HFT_2022231.Logic
 
 		public void Update(Car item)
 		{
-			this.carRepo.Update(item);
+			if (item == null)
+			{
+				throw new NullReferenceException("Car do not exists!");
+			}
+			else
+			{
+				this.carRepo.Update(item);
+			}
 		}
 
 

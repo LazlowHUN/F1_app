@@ -26,17 +26,34 @@ namespace I2CQ73_HFT_2022231.Logic
 
 		public void Create(Pilot item)
 		{
-			this.pilotRepo.Create(item);
+			if (item.PilotAge < 15 || item.PilotAge > 50)
+			{
+				throw new ArgumentOutOfRangeException("The age of pilots must be between 15 and 50.");
+			}
+			else
+			{
+				this.pilotRepo.Create(item);
+			}		
 		}
 
 		public void Delete(int id)
 		{
+			var pilot = this.pilotRepo.Read(id);
+			if (pilot == null)
+			{
+				throw new ArgumentException("Pilot do not exists!");
+			}
 			this.pilotRepo.Delete(id);
 		}
 
 		public Pilot Read(int id)
 		{
-			return this.pilotRepo.Read(id);
+			var pilot = this.pilotRepo.Read(id);
+			if (pilot == null)
+			{
+				throw new ArgumentException("Pilot do not exists!");
+			}
+			return pilot;
 		}
 
 		public IQueryable<Pilot> ReadAll()
@@ -46,7 +63,14 @@ namespace I2CQ73_HFT_2022231.Logic
 
 		public void Update(Pilot item)
 		{
-			this.pilotRepo.Update(item);
+			if (item == null)
+			{
+				throw new NullReferenceException("Pilot do not exists!");
+			}
+			else
+			{
+				this.pilotRepo.Update(item);
+			}
 		}
 
 		public IEnumerable<NameTeamSpeed> LeclersCarStatistics()
