@@ -10,14 +10,10 @@ namespace I2CQ73_HFT_2022231.Logic
 {
 	public class CarLogic : ICarLogic
 	{
-		IRepository<Pilot> pilotRepo;
-		IRepository<Team> teamRepo;
 		IRepository<Car> carRepo;
 
-		public CarLogic(IRepository<Pilot> pilotRepo, IRepository<Team> teamRepo, IRepository<Car> carRepo)
+		public CarLogic(IRepository<Car> carRepo)
 		{
-			this.pilotRepo = pilotRepo;
-			this.teamRepo = teamRepo;
 			this.carRepo = carRepo;
 		}
 

@@ -76,73 +76,56 @@ namespace I2CQ73_HFT_2022231.Logic
 		public IEnumerable<NameTeamSpeed> LeclersCarStatistics()
 		{
 			return from p in this.pilotRepo.ReadAll()
-				   from t in this.teamRepo.ReadAll()
-				   from c in this.carRepo.ReadAll()
-				   where p.TeamId == t.TeamId && p.PilotName.Equals("Charles Leclerc") && c.CarId == t.CarId
-				   select new NameTeamSpeed()
+				   where p.PilotName == "Charles Leclerc"
+				   select new NameTeamSpeed
 				   {
 					   Name = p.PilotName,
-					   Team = t.TeamName,
-					   Speed = c.MaxSpeed,
+					   Team = p.Team.TeamName,
+					   Speed = p.Team.Car.MaxSpeed,
 				   };
-			//where p.PilotName == "Charles Leclerc"
-			//select new NameTeamSpeed
-			//{
-			// Name = p.PilotName,
-			// Team = p.Team.TeamName,
-			// Speed = p.Team.Car.MaxSpeed,
-			//};
 		}
 
 		public IEnumerable<NameEngineBrand> YoungestPilotsEngineBrand()
 		{
 			return from p in this.pilotRepo.ReadAll()
-				   from t in this.teamRepo.ReadAll()
-				   from c in this.carRepo.ReadAll()
 				   let minAge = pilotRepo.ReadAll().Min(x => x.PilotAge)
-				   where p.TeamId == t.TeamId && p.PilotAge == minAge && c.CarId == t.CarId
+				   where p.PilotAge == minAge
 				   select new NameEngineBrand()
 				   {
 					   Name = p.PilotName,
-					   EngineBrand = c.EngineBrand,
+					   EngineBrand = p.Team.Car.EngineBrand,
 				   };
 		}
 
 		public IEnumerable<NameEngineBrand> Pilots1040HorsePower()
 		{
-			return from c in this.carRepo.ReadAll()
-				   from t in this.teamRepo.ReadAll()
-				   from p in this.pilotRepo.ReadAll()
-				   where c.Horsepower == 1040 && c.CarId == t.CarId && p.TeamId == t.TeamId
+			return from p in this.pilotRepo.ReadAll()
+				   where p.Team.Car.Horsepower == 1040
 				   select new NameEngineBrand()
 				   {
 					   Name = p.PilotName,
-					   EngineBrand = c.EngineBrand,
+					   EngineBrand = p.Team.Car.EngineBrand,
 				   };
 		}
 		public IEnumerable<NameEngineBrand> MercedesBrandTeamPointsAbove200Pilots()
 		{
-			return from c in this.carRepo.ReadAll()
-				   from t in this.teamRepo.ReadAll()
-				   from p in this.pilotRepo.ReadAll()
-				   where c.EngineBrand == "Mercedes" && c.CarId == t.TeamId && t.TeamPoints > 200 && p.TeamId == t.TeamId
+			return from p in this.pilotRepo.ReadAll()
+				   where p.Team.Car.EngineBrand == "Mercedes" && p.Team.TeamPoints > 200
 				   select new NameEngineBrand()
 				   {
 					   Name = p.PilotName,
-					   EngineBrand = c.EngineBrand,
+					   EngineBrand = p.Team.Car.EngineBrand,
 				   };
 		}
 		public IEnumerable<NameTeamSpeed> YoungerThan30PilotsTeamBudgetAbove150MMaxSpeed()
 		{
 			return from p in this.pilotRepo.ReadAll()
-				   from t in this.teamRepo.ReadAll()
-				   from c in this.carRepo.ReadAll()
-				   where p.PilotAge < 30 && p.TeamId == t.TeamId && t.Budget > 150000000 && t.CarId == c.CarId
+				   where p.PilotAge < 30 &&  p.Team.Budget > 150000000
 				   select new NameTeamSpeed()
 				   {
 					   Name = p.PilotName,
-					   Team = t.TeamName,
-					   Speed = c.MaxSpeed,
+					   Team = p.Team.TeamName,
+					   Speed = p.Team.Car.MaxSpeed,
 				   };
 		}
 	}

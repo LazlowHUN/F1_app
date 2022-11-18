@@ -10,15 +10,11 @@ namespace I2CQ73_HFT_2022231.Logic
 {
 	public class TeamLogic : ITeamLogic
 	{
-		IRepository<Pilot> pilotRepo;
 		IRepository<Team> teamRepo;
-		IRepository<Car> carRepo;
 
-		public TeamLogic(IRepository<Pilot> pilotRepo, IRepository<Team> teamRepo, IRepository<Car> carRepo)
+		public TeamLogic(IRepository<Team> teamRepo)
 		{
-			this.pilotRepo = pilotRepo;
 			this.teamRepo = teamRepo;
-			this.carRepo = carRepo;
 		}
 
 		public void Create(Team item)

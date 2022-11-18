@@ -6,6 +6,7 @@ using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.WebSockets;
 
 namespace I2CQ73_HFT_2022231.Test
 {
@@ -26,43 +27,78 @@ namespace I2CQ73_HFT_2022231.Test
 			mockTeamRepo = new Mock<IRepository<Team>>();
 			mockCarRepo = new Mock<IRepository<Car>>();
 
+			var leclerc = new Pilot() { PilotName = "Charles Leclerc", PilotAge = 25, PilotId = 1, TeamId = 1 };
+			var sainz = new Pilot() { PilotName = "Carlos Sainz", PilotAge = 28, PilotId = 2, TeamId = 1 };
+			var hamilton = new Pilot() { PilotName = "Lewis Hamilton", PilotAge = 37, PilotId = 3, TeamId = 2 };
+			var russel = new Pilot() { PilotName = "George Russel", PilotAge = 24, PilotId = 4, TeamId = 2 };
+			var verstappen = new Pilot() { PilotName = "Max Verstappen", PilotAge = 25, PilotId = 5, TeamId = 3 };
+			var perez = new Pilot() { PilotName = "Sergio Perez", PilotAge = 32, PilotId = 6, TeamId = 3 };
+			var norris = new Pilot() { PilotName = "Lando Norris", PilotAge = 22, PilotId = 7, TeamId = 4 };
+			var ricciardo = new Pilot() { PilotName = "Daniel Ricciardo", PilotAge = 33, PilotId = 8, TeamId = 4 };
+
+
+			var ferrari = new Team() { TeamId = 1, TeamName = "Ferrari", TeamPoints = 454, CarId = 1, Budget = 463000000 , Pilots = new List<Pilot>() { leclerc, sainz} };
+			var mercedes = new Team() { TeamId = 2, TeamName = "Mercedes", TeamPoints = 387, Budget = 484000000, CarId = 2, Pilots = new List<Pilot>() { hamilton, russel} };
+			var redbull = new Team() { TeamId = 3, TeamName = "Red Bull Racing", TeamPoints = 619, Budget = 445000000, CarId = 3, Pilots = new List<Pilot>() { verstappen, perez } };
+			var mclaren = new Team() { TeamId = 4, TeamName = "McLaren", TeamPoints = 130, Budget = 269000000, CarId = 4, Pilots = new List<Pilot>() { norris, ricciardo } };
+
+			leclerc.Team = ferrari;
+			sainz.Team = ferrari;
+			hamilton.Team = mercedes;
+			russel.Team = mercedes;
+			verstappen.Team = redbull;
+			perez.Team = redbull;
+			norris.Team = mclaren;
+			ricciardo.Team = mclaren;
+
+			var fcar = new Car() { CarId = 1, EngineBrand = "Ferrari", Horsepower = 1050, MaxSpeed = double.Parse("342,7"), Team = leclerc.Team };
+			var mcar = new Car() { CarId = 1, EngineBrand = "Mercedes", Horsepower = 1040, MaxSpeed = double.Parse("339,6"), Team = hamilton.Team };
+			var rcar = new Car() { CarId = 1, EngineBrand = "Honda", Horsepower = 1045, MaxSpeed = double.Parse("343,2"), Team = verstappen.Team };
+			var mlcar = new Car() { CarId = 1, EngineBrand = "Mercedes", Horsepower = 1040, MaxSpeed = double.Parse("337,5"), Team = norris.Team };
+
+			ferrari.Car = fcar;
+			mercedes.Car = mcar;
+			redbull.Car = rcar;
+			mclaren.Car = mlcar;
+			
+
 			mockPilotRepo.Setup(m => m.ReadAll()).Returns(new List<Pilot>()
 			{
-				new Pilot("1#Charles Leclerc#25#1"),
-				new Pilot("2#Carlos Sainz#28#1"),
-				new Pilot("3#Lewis Hamilton#37#2"),
-				new Pilot("4#George Russel#24#2"),
-				new Pilot("5#Max Verstappen#25#3"),
-				new Pilot("6#Sergio Perez#32#3"),
-				new Pilot("7#Lando Norris#22#4"),
-				new Pilot("8#Daniel Ricciardo#33#4"),
+				leclerc,
+				sainz,
+				hamilton,
+				russel,
+				verstappen,
+				perez,
+				norris,
+				ricciardo,
 			}.AsQueryable());
 
 			mockPilotRepo.Setup(m => m.Read(1)).Returns(new Pilot("1#Charles Leclerc#25#1"));
 
 			mockTeamRepo.Setup(m => m.ReadAll()).Returns(new List<Team>()
 			{
-				new Team("1#Ferrari#1#463000000#454"),
-				new Team("2#Mercedes#2#484000000#387"),
-				new Team("3#Red Bull Racing#3#445000000#619"),
-				new Team("4#McLaren#4#269000000#130"),
+				ferrari,
+				redbull,
+				mercedes,
+				mclaren,
 			}.AsQueryable());
 
 			mockTeamRepo.Setup(m => m.Read(1)).Returns(new Team("1#Ferrari#1#463000000#454"));
 
 			mockCarRepo.Setup(m => m.ReadAll()).Returns(new List<Car>()
 			{
-				new Car("1#Ferrari#342,7#1050"),
-				new Car("2#Mercedes#339,6#1040"),
-				new Car("3#Honda#343,2#1045"),
-				new Car("4#Mercedes#337,5#1040"),
+				fcar,
+				mcar,
+				rcar,
+				mlcar,
 			}.AsQueryable());
 
 			mockCarRepo.Setup(m => m.Read(1)).Returns(new Car("1#Ferrari#342,7#1050"));
 
 			pilotLogic = new PilotLogic(mockPilotRepo.Object, mockTeamRepo.Object, mockCarRepo.Object);
-			teamLogic = new TeamLogic(mockPilotRepo.Object, mockTeamRepo.Object, mockCarRepo.Object);
-			carLogic = new CarLogic(mockPilotRepo.Object, mockTeamRepo.Object, mockCarRepo.Object);
+			teamLogic = new TeamLogic(mockTeamRepo.Object);
+			carLogic = new CarLogic(mockCarRepo.Object);
 		}
 
 		[Test]

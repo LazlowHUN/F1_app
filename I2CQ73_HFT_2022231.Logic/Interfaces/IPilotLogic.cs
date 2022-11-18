@@ -11,5 +11,10 @@ namespace I2CQ73_HFT_2022231.Logic
 		Pilot Read(int id);
 		IQueryable<Pilot> ReadAll();
 		void Update(Pilot item);
+		IEnumerable<NameTeamSpeed> LeclersCarStatistics();
+		IEnumerable<NameEngineBrand> YoungestPilotsEngineBrand();
+		IEnumerable<NameEngineBrand> Pilots1040HorsePower();
+		IEnumerable<NameEngineBrand> MercedesBrandTeamPointsAbove200Pilots();
+		IEnumerable<NameTeamSpeed> YoungerThan30PilotsTeamBudgetAbove150MMaxSpeed();
 	}
 }
