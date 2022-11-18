@@ -79,6 +79,46 @@ namespace I2CQ73_HFT_2022231.Client
 					Console.WriteLine(item.CarId + ": " + item.EngineBrand);
 				}
 			}
+			if (entity == "Leclerc")
+			{
+				List<object> stats = rest.Get<object>("Stat/LeclersCarStatistics");
+				foreach (var item in stats)
+				{
+					Console.WriteLine(item);
+				}
+			}
+			if (entity == "Youngest")
+			{
+				List<object> stats = rest.Get<object>("Stat/YoungestPilotsEngineBrand");
+				foreach (var item in stats)
+				{
+					Console.WriteLine(item);
+				}
+			}
+			if (entity == "1040")
+			{
+				List<object> stats = rest.Get<object>("Stat/Pilots1040HorsePower");
+				foreach (var item in stats)
+				{
+					Console.WriteLine(item);
+				}
+			}
+			if (entity == "Mercedes")
+			{
+				List<object> stats = rest.Get<object>("Stat/MercedesBrandTeamPointsAbove200Pilots");
+				foreach (var item in stats)
+				{
+					Console.WriteLine(item);
+				}
+			}
+			if (entity == "Younger")
+			{
+				List<object> stats = rest.Get<object>("Stat/YoungerThan30PilotsTeamBudgetAbove150MMaxSpeed");
+				foreach (var item in stats)
+				{
+					Console.WriteLine(item);
+				}
+			}
 			Console.ReadLine();
 		}
 		static void Update(string entity)
@@ -161,10 +201,19 @@ namespace I2CQ73_HFT_2022231.Client
 				.Add("Update", () => Update("Car"))
 				.Add("Exit", ConsoleMenu.Close);
 
+			var noncrudMenu = new ConsoleMenu(args, level: 1)
+				.Add("Leclerc Stat", () => List("Leclerc"))
+				.Add("Youngest pilots", () => List("Youngest"))
+				.Add("1040 Horsepower", () => List("1040"))
+				.Add("Mercedes above 200", () => List("Mercedes"))
+				.Add("Younger than 30", () => List("Younger"))
+				.Add("Exit", ConsoleMenu.Close);
+
 			var menu = new ConsoleMenu(args, level: 0)
 				.Add("Pilots", () => pilotSubMenu.Show())
 				.Add("Teams", () => teamSubMenu.Show())
 				.Add("Cars", () => carSubMenu.Show())
+				.Add("Non-cruds", () => noncrudMenu.Show())
 				.Add("Exit", ConsoleMenu.Close);
 
 			menu.Show();
