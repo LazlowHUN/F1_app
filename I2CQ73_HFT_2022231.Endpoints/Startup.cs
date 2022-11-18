@@ -42,7 +42,7 @@ namespace I2CQ73_HFT_2022231.Endpoints
 			services.AddControllers();
 			services.AddSwaggerGen(c =>
 			{
-				c.SwaggerDoc("v1", new OpenApiInfo { Title = "I2CQ73_HFT_2022231.Endpoints", Version = "v1" });
+				c.SwaggerDoc("v1", new OpenApiInfo { Title = "I2CQ73_HFT_2022231.Endpoint", Version = "v1" });
 			});
 		}
 
@@ -53,7 +53,7 @@ namespace I2CQ73_HFT_2022231.Endpoints
 			{
 				app.UseDeveloperExceptionPage();
 				app.UseSwagger();
-				app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "I2CQ73_HFT_2022231.Endpoints v1"));
+				app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "I2CQ73_HFT_2022231.Endpoint v1"));
 			}
 
 			app.UseRouting();
