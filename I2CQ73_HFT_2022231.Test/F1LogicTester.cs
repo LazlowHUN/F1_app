@@ -12,7 +12,9 @@ namespace I2CQ73_HFT_2022231.Test
 	[TestFixture]
 	public class F1LogicTester
 	{
-		PilotLogic logic;
+		PilotLogic pilotLogic;
+		TeamLogic teamLogic;
+		CarLogic carLogic;
 		Mock<IRepository<Pilot>> mockPilotRepo;
 		Mock<IRepository<Team>> mockTeamRepo;
 		Mock<IRepository<Car>> mockCarRepo;
@@ -35,15 +37,8 @@ namespace I2CQ73_HFT_2022231.Test
 				new Pilot("7#Lando Norris#22#4"),
 				new Pilot("8#Daniel Ricciardo#33#4"),
 			}.AsQueryable());
-			//elso
-			//mockPilotRepo.Setup(m => m.Create(It.IsAny<Pilot>()));
-			//mockPilotRepo.Setup(m => m.Read(1)).Returns(new Pilot
-			//{
-			//	PilotId = 1,
-			//	PilotName = "Charles Leclerc",
-			//	PilotAge = 25,
-			//	TeamId = 1,
-			//});
+
+			mockPilotRepo.Setup(m => m.Read(1)).Returns(new Pilot("1#Charles Leclerc#25#1"));
 
 			mockTeamRepo.Setup(m => m.ReadAll()).Returns(new List<Team>()
 			{
@@ -52,16 +47,8 @@ namespace I2CQ73_HFT_2022231.Test
 				new Team("3#Red Bull Racing#3#445000000#619"),
 				new Team("4#McLaren#4#269000000#130"),
 			}.AsQueryable());
-			//masodik
-			//mockTeamRepo.Setup(m => m.Create(It.IsAny<Team>()));
-			//mockTeamRepo.Setup(m => m.Read(1)).Returns(new Team
-			//{
-			//	TeamId = 1,
-			//	TeamName = "ferrari",
-			//	CarId = 1,
-			//	Budget = 463000000,
-			//	TeamPoints = 454,
-			//});
+
+			mockTeamRepo.Setup(m => m.Read(1)).Returns(new Team("1#Ferrari#1#463000000#454"));
 
 			mockCarRepo.Setup(m => m.ReadAll()).Returns(new List<Car>()
 			{
@@ -70,23 +57,18 @@ namespace I2CQ73_HFT_2022231.Test
 				new Car("3#Honda#343,2#1045"),
 				new Car("4#Mercedes#337,5#1040"),
 			}.AsQueryable());
-			//harmadik
-			//mockCarRepo.Setup(m => m.Create(It.IsAny<Car>()));
-			//mockCarRepo.Setup(m => m.Read(1)).Returns(new Car
-			//{
-			//	CarId = 1,
-			//	EngineBrand = "Ferrari",
-			//	MaxSpeed = double.Parse("342,7"),
-			//	Horsepower = 1050,
-			//});
 
-			logic = new PilotLogic(mockPilotRepo.Object, mockTeamRepo.Object, mockCarRepo.Object);
+			mockCarRepo.Setup(m => m.Read(1)).Returns(new Car("1#Ferrari#342,7#1050"));
+
+			pilotLogic = new PilotLogic(mockPilotRepo.Object, mockTeamRepo.Object, mockCarRepo.Object);
+			teamLogic = new TeamLogic(mockPilotRepo.Object, mockTeamRepo.Object, mockCarRepo.Object);
+			carLogic = new CarLogic(mockPilotRepo.Object, mockTeamRepo.Object, mockCarRepo.Object);
 		}
 
 		[Test]
 		public void LeclersCarStatisticsTest()
 		{
-			var stat = logic.LeclersCarStatistics().ToList();
+			var stat = pilotLogic.LeclersCarStatistics().ToList();
 			var expected = new List<NameTeamSpeed>()
 			{
 				new NameTeamSpeed()
@@ -103,7 +85,7 @@ namespace I2CQ73_HFT_2022231.Test
 		[Test]
 		public void YoungestPilotsEngineBrandTest()
 		{
-			var stat = logic.YoungestPilotsEngineBrand().ToList();
+			var stat = pilotLogic.YoungestPilotsEngineBrand().ToList();
 			var expected = new List<NameEngineBrand>()
 			{
 				new NameEngineBrand()
@@ -119,7 +101,7 @@ namespace I2CQ73_HFT_2022231.Test
 		[Test]
 		public void Pilots1040HorsePowerTest()
 		{
-			var stat = logic.Pilots1040HorsePower().ToList();
+			var stat = pilotLogic.Pilots1040HorsePower().ToList();
 			var expected = new List<NameEngineBrand>()
 			{
 				new NameEngineBrand()
@@ -150,7 +132,7 @@ namespace I2CQ73_HFT_2022231.Test
 		[Test]
 		public void MercedesBrandTeamPointsAbove200PilotsTest()
 		{
-			var stat = logic.MercedesBrandTeamPointsAbove200Pilots().ToList();
+			var stat = pilotLogic.MercedesBrandTeamPointsAbove200Pilots().ToList();
 			var expected = new List<NameEngineBrand>()
 			{
 				new NameEngineBrand()
@@ -171,7 +153,7 @@ namespace I2CQ73_HFT_2022231.Test
 		[Test]
 		public void YoungerThan30PilotsTeamBudgetAbove150MMaxSpeed()
 		{
-			var stat = logic.YoungerThan30PilotsTeamBudgetAbove150MMaxSpeed().ToList();
+			var stat = pilotLogic.YoungerThan30PilotsTeamBudgetAbove150MMaxSpeed().ToList();
 			var expected = new List<NameTeamSpeed>()
 			{
 				new NameTeamSpeed()
@@ -207,6 +189,96 @@ namespace I2CQ73_HFT_2022231.Test
 			};
 
 			Assert.AreEqual(expected, stat);
+		}
+
+		[Test]
+		public void CreateTeamWithCorrectTest()
+		{
+			var team = new Team()
+			{
+				TeamId = 5,
+				TeamName = "AUDI",
+				CarId = 5,
+				Budget = 303000000,
+				TeamPoints = 0,
+			};
+
+			teamLogic.Create(team);
+
+			mockTeamRepo.Verify(r => r.Create(team), Times.Once);
+		}
+
+		[Test]
+		public void CreateTeamWithIncorrectTest()
+		{
+			var team = new Team()
+			{
+				TeamId = 5,
+				TeamName = "CA",
+				CarId = 5,
+				Budget = 303000000,
+				TeamPoints = 0,
+			};
+
+			try
+			{
+				teamLogic.Create(team);
+			}
+			catch
+			{
+
+			}
+
+			mockTeamRepo.Verify(r => r.Create(team), Times.Never);
+		}
+
+		[Test]
+		public void CreatePilotWithCorrectTest()
+		{
+			var pilot = new Pilot()
+			{
+				PilotId = 9,
+				PilotName = "Charles Alonso",
+				PilotAge = 30,
+				TeamId = 9,
+			};
+
+			pilotLogic.Create(pilot);
+
+			mockPilotRepo.Verify(r => r.Create(pilot), Times.Once);
+		}
+
+		[Test]
+		public void ReadPilotWithCorrectTest()
+		{
+			var pilot = new Pilot()
+			{
+				PilotId = 1,
+				PilotName = "Charles Leclerc",
+				PilotAge = 25,
+				TeamId = 1,
+			};
+
+			var pilot_id = pilotLogic.Read(1);
+
+			Assert.AreEqual(pilot, pilot_id);
+		}
+
+		[Test]
+		public void ReadTeamWithCorrectTest()
+		{
+			var team = new Team()
+			{
+				TeamId = 1,
+				TeamName = "Ferrari",
+				CarId = 1,
+				Budget = 463000000,
+				TeamPoints = 454,
+			};
+
+			var team_id = teamLogic.Read(1);
+
+			Assert.AreEqual(team, team_id);
 		}
 	}
 }

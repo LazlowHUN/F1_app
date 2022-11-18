@@ -1,20 +1,20 @@
-using Castle.Core.Configuration;
 using I2CQ73_HFT_2022231.Logic;
 using I2CQ73_HFT_2022231.Models;
 using I2CQ73_HFT_2022231.Repository;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace I2CQ73_HFT_2022231.Endpoint
+namespace I2CQ73_HFT_2022231.Endpoints
 {
 	public class Startup
 	{
@@ -22,11 +22,14 @@ namespace I2CQ73_HFT_2022231.Endpoint
 		{
 			Configuration = configuration;
 		}
+
 		public IConfiguration Configuration { get; }
 
+		// This method gets called by the runtime. Use this method to add services to the container.
 		public void ConfigureServices(IServiceCollection services)
 		{
 			services.AddTransient<F1DbContext>();
+
 
 			services.AddTransient<IRepository<Pilot>, PilotRepository>();
 			services.AddTransient<IRepository<Team>, TeamRepository>();
@@ -39,7 +42,7 @@ namespace I2CQ73_HFT_2022231.Endpoint
 			services.AddControllers();
 			services.AddSwaggerGen(c =>
 			{
-				c.SwaggerDoc("v1", new OpenApiInfo { Title = "I2CQ73_HFT_2022231.Endpoint", Version = "v1"});
+				c.SwaggerDoc("v1", new OpenApiInfo { Title = "I2CQ73_HFT_2022231.Endpoints", Version = "v1" });
 			});
 		}
 
@@ -50,7 +53,7 @@ namespace I2CQ73_HFT_2022231.Endpoint
 			{
 				app.UseDeveloperExceptionPage();
 				app.UseSwagger();
-				app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "I2CQ73_HFT_2022231.Endpoint v1"));
+				app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "I2CQ73_HFT_2022231.Endpoints v1"));
 			}
 
 			app.UseRouting();

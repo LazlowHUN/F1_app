@@ -49,5 +49,22 @@ namespace I2CQ73_HFT_2022231.Models
 			TeamPoints = int.Parse(split[4]);
 			Pilots = new HashSet<Pilot>();
 		}
+
+		public override bool Equals(object obj)
+		{
+			Team b = obj as Team;
+			if (b == null)
+			{
+				return false;
+			}
+			else
+			{
+				return b.TeamId == this.TeamId && b.TeamName == this.TeamName;
+			}
+		}
+		public override int GetHashCode()
+		{
+			return HashCode.Combine(TeamId, TeamName, CarId, Budget, TeamPoints);
+		}
 	}
 }

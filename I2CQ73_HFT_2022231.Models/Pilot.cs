@@ -42,5 +42,22 @@ namespace I2CQ73_HFT_2022231.Models
 			PilotAge = int.Parse(split[2]);
 			TeamId = int.Parse(split[3]);
 		}
+
+		public override bool Equals(object obj)
+		{
+			Pilot b = obj as Pilot;
+			if (b == null)
+			{
+				return false;
+			}
+			else
+			{
+				return b.PilotName == this.PilotName && b.PilotId == this.PilotId;
+			}
+		}
+		public override int GetHashCode()
+		{
+			return HashCode.Combine(PilotId, PilotName, PilotAge, TeamId);
+		}
 	}
 }

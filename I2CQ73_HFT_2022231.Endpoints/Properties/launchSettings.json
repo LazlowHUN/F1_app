@@ -1,10 +1,10 @@
 ﻿{
-  "$schema":  "https://json.schemastore.org/launchsettings.json",
+  "$schema": "http://json.schemastore.org/launchsettings.json",
   "iisSettings": {
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
     "iisExpress": {
-      "applicationUrl": "http://localhost:53910",
+      "applicationUrl": "http://localhost:11372",
       "sslPort": 0
     }
   },
@@ -17,7 +17,7 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "I2CQ73_HFT_2022231.Endpoint": {
+    "I2CQ73_HFT_2022231.Endpoints": {
       "commandName": "Project",
       "dotnetRunMessages": "true",
       "launchBrowser": true,
