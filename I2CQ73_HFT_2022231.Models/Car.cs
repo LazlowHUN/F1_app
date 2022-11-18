@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Data;
+using System.Text.Json.Serialization;
 
 namespace I2CQ73_HFT_2022231.Models
 {
@@ -24,7 +25,9 @@ namespace I2CQ73_HFT_2022231.Models
 
 		public int Horsepower { get; set; }
 
+
 		[NotMapped]
+		[JsonIgnore]
 		public virtual Team Team { get; set; }
 
 		public Car()

@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Text.Json.Serialization;
 
 namespace I2CQ73_HFT_2022231.Models
 {
@@ -27,6 +28,7 @@ namespace I2CQ73_HFT_2022231.Models
 		public int TeamId { get; set; }
 
 		[NotMapped]
+		[JsonIgnore]
 		public virtual Team Team { get; set; }
 
 		public Pilot()
