@@ -14,165 +14,193 @@ namespace I2CQ73_HFT_2022231.Client
 
 		static void Create(string entity)
 		{
-			if (entity == "Pilot")
+			try
 			{
-				Console.Write("Enter Pilot Id: ");
-				int id = int.Parse(Console.ReadLine());
-				Console.Write("Enter Pilot Name: ");
-				string name = Console.ReadLine();
-				Console.Write("Enter Pilot age: ");
-				int age = int.Parse(Console.ReadLine());
-				Console.Write("Enter Pilot TeamId: ");
-				int team_id = int.Parse(Console.ReadLine());
-				rest.Post(new Pilot() { PilotId = id, PilotName = name, PilotAge = age, TeamId = team_id}, "pilot");
+				if (entity == "Pilot")
+				{
+					Console.Write("Enter Pilot Id: ");
+					int id = int.Parse(Console.ReadLine());
+					Console.Write("Enter Pilot Name: ");
+					string name = Console.ReadLine();
+					Console.Write("Enter Pilot age: ");
+					int age = int.Parse(Console.ReadLine());
+					Console.Write("Enter Pilot TeamId: ");
+					int team_id = int.Parse(Console.ReadLine());
+					rest.Post(new Pilot() { PilotId = id, PilotName = name, PilotAge = age, TeamId = team_id }, "pilot");
+				}
+				if (entity == "Team")
+				{
+					Console.Write("Enter Team Id: ");
+					int id = int.Parse(Console.ReadLine());
+					Console.Write("Enter Team Name: ");
+					string name = Console.ReadLine();
+					Console.Write("Enter CarId: ");
+					int car_id = int.Parse(Console.ReadLine());
+					Console.Write("Enter Team budget: ");
+					int budget = int.Parse(Console.ReadLine());
+					Console.Write("Enter Team points: ");
+					int points = int.Parse(Console.ReadLine());
+					rest.Post(new Team() { TeamId = id, TeamName = name, CarId = car_id, Budget = budget, TeamPoints = points }, "team");
+				}
+				if (entity == "Car")
+				{
+					Console.Write("Enter Car Id: ");
+					int id = int.Parse(Console.ReadLine());
+					Console.Write("Enter Car engine brand: ");
+					string brand = Console.ReadLine();
+					Console.Write("Enter Car max speed: ");
+					int speed = int.Parse(Console.ReadLine());
+					Console.Write("Enter Car Horsepower: ");
+					int horsepower = int.Parse(Console.ReadLine());
+					rest.Post(new Car() { CarId = id, EngineBrand = brand, MaxSpeed = speed, Horsepower = horsepower }, "car");
+				}
 			}
-			if (entity == "Team")
+			catch (Exception e)
 			{
-				Console.Write("Enter Team Id: ");
-				int id = int.Parse(Console.ReadLine());
-				Console.Write("Enter Team Name: ");
-				string name = Console.ReadLine();
-				Console.Write("Enter CarId: ");
-				int car_id = int.Parse(Console.ReadLine());
-				Console.Write("Enter Team budget: ");
-				int budget = int.Parse(Console.ReadLine());
-				Console.Write("Enter Team points: ");
-				int points = int.Parse(Console.ReadLine());
-				rest.Post(new Team() { TeamId = id, TeamName = name, CarId = car_id, Budget = budget, TeamPoints = points }, "team");
-			}
-			if (entity == "Car")
-			{
-				Console.Write("Enter Car Id: ");
-				int id = int.Parse(Console.ReadLine());
-				Console.Write("Enter Car engine brand: ");
-				string brand = Console.ReadLine();
-				Console.Write("Enter Car max speed: ");
-				int speed = int.Parse(Console.ReadLine());
-				Console.Write("Enter Car Horsepower: ");
-				int horsepower = int.Parse(Console.ReadLine());
-				rest.Post(new Car() { CarId = id, EngineBrand = brand, MaxSpeed = speed, Horsepower = horsepower }, "car");
+				Console.WriteLine(e.Message);
 			}
 		}
 		static void List(string entity)
 		{
-			if (entity == "Pilot")
+			try
 			{
-				List<Pilot> pilots = rest.Get<Pilot>("pilot");
-				foreach (var item in pilots)
+				if (entity == "Pilot")
 				{
-					Console.WriteLine(item.PilotId + ": " + item.PilotName);
+					List<Pilot> pilots = rest.Get<Pilot>("pilot");
+					foreach (var item in pilots)
+					{
+						Console.WriteLine(item.PilotId + ": " + item.PilotName);
+					}
+				}
+				if (entity == "Team")
+				{
+					List<Team> teams = rest.Get<Team>("team");
+					foreach (var item in teams)
+					{
+						Console.WriteLine(item.TeamId + ": " + item.TeamName);
+					}
+				}
+				if (entity == "Car")
+				{
+					List<Car> cars = rest.Get<Car>("car");
+					foreach (var item in cars)
+					{
+						Console.WriteLine(item.CarId + ": " + item.EngineBrand);
+					}
+				}
+				if (entity == "Leclerc")
+				{
+					List<object> stats = rest.Get<object>("Stat/LeclersCarStatistics");
+					foreach (var item in stats)
+					{
+						Console.WriteLine(item);
+					}
+				}
+				if (entity == "Youngest")
+				{
+					List<object> stats = rest.Get<object>("Stat/YoungestPilotsEngineBrand");
+					foreach (var item in stats)
+					{
+						Console.WriteLine(item);
+					}
+				}
+				if (entity == "1040")
+				{
+					List<object> stats = rest.Get<object>("Stat/Pilots1040HorsePower");
+					foreach (var item in stats)
+					{
+						Console.WriteLine(item);
+					}
+				}
+				if (entity == "Mercedes")
+				{
+					List<object> stats = rest.Get<object>("Stat/MercedesBrandTeamPointsAbove200Pilots");
+					foreach (var item in stats)
+					{
+						Console.WriteLine(item);
+					}
+				}
+				if (entity == "Younger")
+				{
+					List<object> stats = rest.Get<object>("Stat/YoungerThan30PilotsTeamBudgetAbove150MMaxSpeed");
+					foreach (var item in stats)
+					{
+						Console.WriteLine(item);
+					}
 				}
 			}
-			if (entity == "Team")
+			catch (Exception e)
 			{
-				List<Team> teams = rest.Get<Team>("team");
-				foreach (var item in teams)
-				{
-					Console.WriteLine(item.TeamId + ": " + item.TeamName);
-				}
-			}
-			if (entity == "Car")
-			{
-				List<Car> cars = rest.Get<Car>("car");
-				foreach (var item in cars)
-				{
-					Console.WriteLine(item.CarId + ": " + item.EngineBrand);
-				}
-			}
-			if (entity == "Leclerc")
-			{
-				List<object> stats = rest.Get<object>("Stat/LeclersCarStatistics");
-				foreach (var item in stats)
-				{
-					Console.WriteLine(item);
-				}
-			}
-			if (entity == "Youngest")
-			{
-				List<object> stats = rest.Get<object>("Stat/YoungestPilotsEngineBrand");
-				foreach (var item in stats)
-				{
-					Console.WriteLine(item);
-				}
-			}
-			if (entity == "1040")
-			{
-				List<object> stats = rest.Get<object>("Stat/Pilots1040HorsePower");
-				foreach (var item in stats)
-				{
-					Console.WriteLine(item);
-				}
-			}
-			if (entity == "Mercedes")
-			{
-				List<object> stats = rest.Get<object>("Stat/MercedesBrandTeamPointsAbove200Pilots");
-				foreach (var item in stats)
-				{
-					Console.WriteLine(item);
-				}
-			}
-			if (entity == "Younger")
-			{
-				List<object> stats = rest.Get<object>("Stat/YoungerThan30PilotsTeamBudgetAbove150MMaxSpeed");
-				foreach (var item in stats)
-				{
-					Console.WriteLine(item);
-				}
+				Console.WriteLine(e.Message);
 			}
 			Console.ReadLine();
 		}
 		static void Update(string entity)
 		{
-			if (entity == "Pilot")
+			try
 			{
-				Console.Write("Enter Pilot's id to update: ");
-				int id = int.Parse(Console.ReadLine());
-				Pilot one = rest.Get<Pilot>(id, "pilot");
-				Console.Write($"New name [old: {one.PilotName}]: ");
-				string name = Console.ReadLine();
-				one.PilotName = name;
-				rest.Put(one, "pilot");
+				if (entity == "Pilot")
+				{
+					Console.Write("Enter Pilot's id to update: ");
+					int id = int.Parse(Console.ReadLine());
+					Pilot one = rest.Get<Pilot>(id, "pilot");
+					Console.Write($"New name [old: {one.PilotName}]: ");
+					string name = Console.ReadLine();
+					one.PilotName = name;
+					rest.Put(one, "pilot");
+				}
+				if (entity == "Team")
+				{
+					Console.Write("Enter Team's id to update: ");
+					int id = int.Parse(Console.ReadLine());
+					Team one = rest.Get<Team>(id, "team");
+					Console.Write($"New name [old: {one.TeamName}]: ");
+					string name = Console.ReadLine();
+					one.TeamName = name;
+					rest.Put(one, "team");
+				}
+				if (entity == "Car")
+				{
+					Console.Write("Enter Car's id to update: ");
+					int id = int.Parse(Console.ReadLine());
+					Car one = rest.Get<Car>(id, "car");
+					Console.Write($"New name [old: {one.EngineBrand}]: ");
+					string name = Console.ReadLine();
+					one.EngineBrand = name;
+					rest.Put(one, "car");
+				}
 			}
-			if (entity == "Team")
+			catch (Exception e)
 			{
-				Console.Write("Enter Team's id to update: ");
-				int id = int.Parse(Console.ReadLine());
-				Team one = rest.Get<Team>(id, "team");
-				Console.Write($"New name [old: {one.TeamName}]: ");
-				string name = Console.ReadLine();
-				one.TeamName = name;
-				rest.Put(one, "team");
-			}
-			if (entity == "Car")
-			{
-				Console.Write("Enter Car's id to update: ");
-				int id = int.Parse(Console.ReadLine());
-				Car one = rest.Get<Car>(id, "car");
-				Console.Write($"New name [old: {one.EngineBrand}]: ");
-				string name = Console.ReadLine();
-				one.EngineBrand = name;
-				rest.Put(one, "car");
+				Console.WriteLine(e.Message);
 			}
 		}
 		static void Delete(string entity)
 		{
-			if (entity == "Pilot")
+			try
 			{
-				Console.Write("Enter Pilot's id to delete: ");
-				int id = int.Parse(Console.ReadLine());
-				rest.Delete(id, "pilot");
+				if (entity == "Pilot")
+				{
+					Console.Write("Enter Pilot's id to delete: ");
+					int id = int.Parse(Console.ReadLine());
+					rest.Delete(id, "pilot");
+				}
+				if (entity == "Team")
+				{
+					Console.Write("Enter Team's id to delete: ");
+					int id = int.Parse(Console.ReadLine());
+					rest.Delete(id, "team");
+				}
+				if (entity == "Car")
+				{
+					Console.Write("Enter Car's id to delete: ");
+					int id = int.Parse(Console.ReadLine());
+					rest.Delete(id, "car");
+				}
 			}
-			if (entity == "Team")
+			catch (Exception e)
 			{
-				Console.Write("Enter Team's id to delete: ");
-				int id = int.Parse(Console.ReadLine());
-				rest.Delete(id, "team");
-			}
-			if (entity == "Car")
-			{
-				Console.Write("Enter Car's id to delete: ");
-				int id = int.Parse(Console.ReadLine());
-				rest.Delete(id, "car");
+				Console.WriteLine(e.Message);
 			}
 		}
 
