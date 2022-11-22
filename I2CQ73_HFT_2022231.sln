@@ -24,7 +24,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Others", "Others", "{863DB1
 		.gitignore = .gitignore
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "I2CQ73_HFT_202223.Endpoint", "I2CQ73_HFT_202223.Endpoint\I2CQ73_HFT_202223.Endpoint.csproj", "{B2675655-D31E-4839-BA82-C7EEF1B0D473}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "I2CQ73_HFT_2022231.Endpoint", "I2CQ73_HFT_202223.Endpoint\I2CQ73_HFT_2022231.Endpoint.csproj", "{B2675655-D31E-4839-BA82-C7EEF1B0D473}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

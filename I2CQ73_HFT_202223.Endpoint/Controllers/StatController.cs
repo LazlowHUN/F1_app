@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 
-namespace I2CQ73_HFT_202223.Endpoint.Controllers
+namespace I2CQ73_HFT_2022231.Endpoint.Controllers
 {
 	[Route("[controller]/[action]")]
 	[ApiController]
