@@ -206,7 +206,7 @@ namespace I2CQ73_HFT_2022231.Client
 
 		static void Main(string[] args)
 		{
-			rest = new RestService("http://localhost:19484/", "pilot");
+			rest = new RestService("http://localhost:4608/", "pilot");
 
 			var pilotSubMenu = new ConsoleMenu(args, level: 1)
 				.Add("List", () => List("Pilot"))
