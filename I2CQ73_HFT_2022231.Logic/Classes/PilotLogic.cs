@@ -26,9 +26,9 @@ namespace I2CQ73_HFT_2022231.Logic
 
 		public void Create(Pilot item)
 		{
-			if (item.TeamId < 1 || item.PilotId <1)
+			if (item.TeamId < 1)
 			{
-				throw new ArgumentException("The id of pilots must be above 0");
+				throw new ArgumentException("The id of team must be above 0");
 			}
 			if (item.PilotAge < 15 || item.PilotAge > 50)
 			{

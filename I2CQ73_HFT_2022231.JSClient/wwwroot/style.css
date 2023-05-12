@@ -1,0 +1,59 @@
+﻿table{
+	width:100%;
+	border-collapse: collapse;
+}
+
+table, th, td{
+	border: 1px solid black;
+}
+
+th, td{
+	padding: 5px;
+}
+
+th{
+	background-color: lightblue;
+}
+
+#inputFields {
+	display: flex;
+	flex-direction: column;
+	padding: 5px;
+}
+
+#inputFields label, input {
+	padding: 5px;
+}
+
+#inputFields button {
+	padding: 5px;
+	margin-top: 20px;
+	margin-bottom: 30px;
+}
+
+#inputFields label {
+	font-weight: bolder;
+}
+
+table button{
+	padding: 2px;
+}
+
+#updateformdiv {
+	display: none;
+	flex-direction: column;
+}
+
+#updateformdiv label, input {
+	padding: 5px;
+}
+
+#updateformdiv button {
+	padding: 5px;
+	margin-top: 20px;
+	margin-bottom: 30px;
+}
+
+#updateformdiv label {
+	font-weight: bolder;
+}

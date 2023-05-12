@@ -1,3 +1,4 @@
+using I2CQ73_HFT_2022231.Endpoint.Services;
 using I2CQ73_HFT_2022231.Logic;
 using I2CQ73_HFT_2022231.Models;
 using I2CQ73_HFT_2022231.Repository;
@@ -41,6 +42,8 @@ namespace I2CQ73_HFT_2022231.Endpoint
 			services.AddTransient<ITeamLogic, TeamLogic>();
 			services.AddTransient<ICarLogic, CarLogic>();
 
+			services.AddSignalR();
+
 			services.AddControllers();
 			services.AddSwaggerGen(c =>
 			{
@@ -67,6 +70,12 @@ namespace I2CQ73_HFT_2022231.Endpoint
 				await context.Response.WriteAsJsonAsync(response);
 			}));
 
+			app.UseCors(x => x
+				.AllowCredentials()
+				.AllowAnyMethod()
+				.AllowAnyHeader()
+				.WithOrigins("http://localhost:50374"));
+
 			app.UseRouting();
 
 			app.UseAuthorization();
@@ -74,6 +83,7 @@ namespace I2CQ73_HFT_2022231.Endpoint
 			app.UseEndpoints(endpoints =>
 			{
 				endpoints.MapControllers();
+				endpoints.MapHub<SignalRHub>("/hub");
 			});
 		}
 	}

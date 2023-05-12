@@ -19,10 +19,6 @@ namespace I2CQ73_HFT_2022231.Logic
 
 		public void Create(Car item)
 		{
-			if (item.CarId <1)
-			{
-				throw new ArgumentException("The id of cars must be above 0");
-			}
 			if (item.EngineBrand.Length < 3)
 			{
 				throw new ArgumentException("The name is too short.");

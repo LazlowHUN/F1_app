@@ -19,7 +19,7 @@ namespace I2CQ73_HFT_2022231.Logic
 
 		public void Create(Team item)
 		{
-			if (item.CarId < 1 || item.TeamId < 1)
+			if (item.CarId < 1)
 			{
 				throw new ArgumentException("The id of teams must be above 0");
 			}
