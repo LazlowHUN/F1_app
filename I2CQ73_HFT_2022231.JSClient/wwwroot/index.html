@@ -2,33 +2,42 @@
 <html>
 <head>
     <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Catalog</title>
     <link rel="stylesheet" href="style.css" />
     <link rel="shortcut icon" href="#">
 </head>
 <body>
-    <h1>Catalog</h1>
+    <header class="header">
+        <h1>Catalog</h1>
+        <nav class="navbar">
+            <label for="table-select">Select a table:</label>
+            <select id="table-select">
+                <option value="pilot">Pilots</option>
+                <option value="car">Cars</option>
+                <option value="team">Teams</option>
+            </select>
+        </nav>
+    </header>
 
-    <label for="table-select">Select a table:</label>
-    <select id="table-select">
-        <option value="pilot">Pilots</option>
-        <option value="car">Cars</option>
-        <option value="team">Teams</option>
-    </select>
+    <section class="home">
+        <div class="home-content">
+            <div id="inputFields"></div>
+            <div id="updateformdiv"></div>
 
-    <div id="inputFields"></div>
-    <div id="updateformdiv"></div>
+            <table>
+                <thead>
+                    <tr>
+                    </tr>
+                </thead>
+                <tbody id="resultarea">
+                </tbody>
+            </table>
+        </div>
+    </section>
 
-        <table>
-            <thead>
-                <tr>             
-                </tr>
-            </thead>
-            <tbody id="resultarea">
-            </tbody>
-        </table>
-
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/6.0.1/signalr.js"></script>
-        <script src="script.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/6.0.1/signalr.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>

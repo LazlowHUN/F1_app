@@ -1,24 +1,88 @@
-﻿table{
-	width:100%;
-	border-collapse: collapse;
+﻿*{
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
 }
 
-table, th, td{
-	border: 1px solid black;
+body {
+	background: #ffdd00;
+	color: #ededed;
 }
 
-th, td{
-	padding: 5px;
+h1 {
+	color: #001427;
+	text-decoration: none;
+	font-weight: 600;
 }
 
-th{
-	background-color: lightblue;
-}
-
-#inputFields {
+header {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	padding: 20px 10%;
+	background: #ffea00;
 	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	z-index: 100;
+}
+
+section {
+	padding: 80px 0;
+}
+
+navbar, label {
+	font-size: 18px;
+	color: #001427;
+	text-decoration: none;
+	font-weight: 500;
+}
+
+home, #inputFields, #updateformdiv {
+	margin: 0 auto;
+	height: 40vh;
 	flex-direction: column;
-	padding: 5px;
+	display: flex;
+	min-width: 200px;
+	max-width: 1000px;
+}
+
+table {
+	border-collapse: collapse;
+	margin: 0 auto;
+	font-size: 0.9em;
+	font-family: sans-serif;
+	min-width: 1400px;
+	box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+	color: #001427;
+}
+
+table thead tr {
+	background-color: #ffea00;
+	color: #001427;
+	text-align: left;
+}
+
+table th, table td {
+	padding: 12px 15px;
+}
+
+table tbody tr {
+	border-bottom: 1px solid #dddddd;
+}
+
+table tbody tr:nth-of-type(even) {
+	background-color: #f3f3f3;
+}
+
+table tbody tr:last-of-type {
+	border-bottom: 2px solid #001427;
+}
+
+table tbody tr.active-row {
+	font-weight: bold;
+	color: #001427;
 }
 
 #inputFields label, input {
@@ -28,11 +92,7 @@ th{
 #inputFields button {
 	padding: 5px;
 	margin-top: 20px;
-	margin-bottom: 30px;
-}
-
-#inputFields label {
-	font-weight: bolder;
+	margin-bottom: 20px;
 }
 
 table button{
@@ -40,20 +100,17 @@ table button{
 }
 
 #updateformdiv {
-	display: none;
+	min-width: 200px;
+	max-width: 1000px;
 	flex-direction: column;
 }
 
 #updateformdiv label, input {
 	padding: 5px;
-}
+}	
 
 #updateformdiv button {
 	padding: 5px;
 	margin-top: 20px;
 	margin-bottom: 30px;
-}
-
-#updateformdiv label {
-	font-weight: bolder;
 }
